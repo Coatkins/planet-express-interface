@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+		<table>
+			<tr>
+				<th>Title</th>
+				<th>Forename</th>
+				<th>Surname</th>
+				<th>Personal Address 1</th>
+				<th>Personal Address 2</th>
+				<th>Personal Postcode</th>
+				<th>Phone Number</th>
+				<th>Email</th>
+				<th>Weight(Kg)</th>
+				<th>Comments</th>
+				<th>Collection Address 1</th>
+				<th>Collection Address 2</th>
+				<th>Collection Postcode</th>
+				<th>Delivery Address 1</th>
+				<th>Delivery Address 2</th>
+				<th>Delivery Postcode</th>
+			</tr>
+			<tr>
+				<td>{{ Title }}</td>
+				<td>{{ Forename }}</td>
+				<td>{{ PersonalAdd1 }}</td>
+				<td>{{ PersonalAdd2 }}</td>
+				<td>{{ PersonalPostcode }}</td>
+				<td>{{ Phonenumber }}</td>
+				<td>{{ Email }}</td>
+				<td>{{ Weight }}</td>
+				<td>{{ Comments }}</td>
+				<td>{{ CollectionAdd1 }}</td>
+				<td>{{ CollectionAdd2 }}</td>
+				<td>{{ CollectionPostcode }}</td>
+				<td>{{ DeliveryAdd1 }}</td>
+				<td>{{ DeliveryAdd2 }</td>
+				<td>{{ DeliveryPostcode }}</td>
+			</tr>
+		</table>
+    </body>
+</html>

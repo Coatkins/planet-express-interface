@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<link rel="stylesheet" href="reset.css">
+	<link rel="stylesheet" href="Index.css">	
+    </head>
+<div class="app">
+    <body>
+	<header>
+		<img src="logo.svg" class="app-logo" alt="logo" />
+		<h1 style="h1">Orders</h1>
+	</header>
+	<div class="main">
+		<table id="Orders">
+			<tr>
+				<th>Order ID</th>
+				<th>Customer</th>
+			</tr>		
+        {{#orders}}
+			<tr>
+				<td><a href="/orders/{{ id }}">{{ id }}</a></td>
+				<td>{{ Forename }} {{ Surname }}</td>
+			</tr>
+		{{/orders}}	
+		</table>
+	</div>
+    </body>
+</div>
+</html>

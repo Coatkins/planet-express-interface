@@ -1,0 +1,111 @@
+.app {
+  text-align: center;
+}
+.main {
+	background-color: #ADD8E6;
+	min-height: 90vh;
+	padding-top: 15px;
+}
+
+.entry-form {
+	padding: 0.5em;
+}
+
+.heading {
+	color: white;
+	padding: 10px;
+	font-family: Ariel;
+	font-size: 25px;
+	font-weight: 500;
+}
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+input[type=number]{
+    width: 500px;
+}
+
+input[type=text]{
+    width: 500px;
+} 
+
+input[type=email]{
+    width: 500px;
+}    
+
+textarea {
+	width: 500px;
+}
+
+.app-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+select {
+	width: 60px;
+}
+
+header {
+	background-color: #222;
+	height: 150px;
+	padding: 20px;
+	color: white;
+	font-size: 40px;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	font-size: 20px;
+	box-sizing: border-box;
+}
+
+form {
+  max-width: 800px;
+  padding: 0 2em 5em;
+  margin: 0 auto;
+}
+
+#Orders {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+	text-align: left;
+	width: 1000px;
+    border: 2px solid #000000;
+	margin: 0px auto; 
+}
+
+#Orders td, #Orders th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#Orders tr:nth-child(even){background-color: #f2f2f2;}
+
+#Orders tr:hover {background-color: #ddd;}
+
+#Orders th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
