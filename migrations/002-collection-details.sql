@@ -1,6 +1,6 @@
 -- Up
 ALTER TABLE Orders ADD COLUMN DeliveryStatus TEXT;
-ALTER TABLE Orders ADD COLUMN CollectionDate TEXT;
+ALTER TABLE Orders ADD COLUMN CollectionDate TEXT; 
 
 CREATE TABLE Users (
 	id INTEGER PRIMARY KEY,
