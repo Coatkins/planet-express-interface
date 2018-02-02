@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
+	<link rel="stylesheet" href="/reset.css">
+	<link rel="stylesheet" href="/Index.css">
     </head>
-    <body>
-		<table>
+<div class="app">
+    <body style="width:100%">
+	<header>
+		<img src="/logo.svg" class="app-logo" alt="logo" />
+		<h1 style="h1">Order</h1>
+	</header>
+	<div class="main">
+		<form class="orderform" action="/order" method="POST">  
+		<table id="Order" style="width:160%">
 			<tr>
 				<th>Title</th>
 				<th>Forename</th>
@@ -14,31 +23,56 @@
 				<th>Phone Number</th>
 				<th>Email</th>
 				<th>Weight(Kg)</th>
-				<th>Comments</th>
+			</tr>
+			<tr>
+				<td class="capital">{{ order.Title }}</td>
+				<td>{{ order.Forename }}</td>
+				<td>{{ order.Surname }}</td>
+				<td>{{ order.PersonalAdd1 }}</td>
+				<td>{{ order.PersonalAdd2 }}</td>
+				<td>{{ order.PersonalPostcode }}</td>
+				<td>{{ order.Phonenumber }}</td>
+				<td>{{ order.Email }}</td>
+				<td>{{ order.Weight }}</td>
+			</tr>
+		</table>
+		<br>
+		<table id="Order" style="width:160%">
+			<tr>
 				<th>Collection Address 1</th>
 				<th>Collection Address 2</th>
 				<th>Collection Postcode</th>
 				<th>Delivery Address 1</th>
 				<th>Delivery Address 2</th>
 				<th>Delivery Postcode</th>
+				<th>Delivery Status</th>
+				<th>Collection Date</th>
+				<th>Comments</th>
 			</tr>
 			<tr>
-				<td>{{ Title }}</td>
-				<td>{{ Forename }}</td>
-				<td>{{ PersonalAdd1 }}</td>
-				<td>{{ PersonalAdd2 }}</td>
-				<td>{{ PersonalPostcode }}</td>
-				<td>{{ Phonenumber }}</td>
-				<td>{{ Email }}</td>
-				<td>{{ Weight }}</td>
-				<td>{{ Comments }}</td>
-				<td>{{ CollectionAdd1 }}</td>
-				<td>{{ CollectionAdd2 }}</td>
-				<td>{{ CollectionPostcode }}</td>
-				<td>{{ DeliveryAdd1 }}</td>
-				<td>{{ DeliveryAdd2 }</td>
-				<td>{{ DeliveryPostcode }}</td>
+				<td>{{ order.CollectionAdd1 }}</td>
+				<td>{{ order.CollectionAdd2 }}</td>
+				<td>{{ order.CollectionPostcode }}</td>
+				<td>{{ order.DeliveryAdd1 }}</td>
+				<td>{{ order.DeliveryAdd2 }}</td>
+				<td>{{ order.DeliveryPostcode }}</td>
+				<td>
+					<select name="DeliveryStatus" style="width:120px">
+						{{#each delivery_statuses}}
+						   <option value="{{label}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+						{{/each}}
+					</select>
+				</td>
+				<td><input type="date" style="width:95%" name="CollectionDate" value="{{ order.CollectionDate }}"></td>
+				<td>{{ order.Comments }}</td>
 			</tr>
 		</table>
+		<br>
+		<br>
+        <button class="orderbutton" type="submit">Update</button>
+		<input type="hidden" name="id" value="{{ order.id }}">
+		</form>
+	</div>
     </body>
+</div>
 </html>

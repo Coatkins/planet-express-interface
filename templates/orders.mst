@@ -15,11 +15,13 @@
 			<tr>
 				<th>Order ID</th>
 				<th>Customer</th>
+				<th>Delivery Status</th>
 			</tr>		
         {{#orders}}
 			<tr>
 				<td><a href="/orders/{{ id }}">{{ id }}</a></td>
 				<td>{{ Forename }} {{ Surname }}</td>
+				<td>{{ DeliveryStatus }}</td>
 			</tr>
 		{{/orders}}	
 		</table>

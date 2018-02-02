@@ -2,7 +2,7 @@ var http = require("http");
 var fs = require("fs");
 var express = require("express");
 var sqlite = require('sqlite');
-var Mustache = require('mustache');
+var Handlebars = require('handlebars');
 var app = express();
 var bodyParser = require('body-parser');
 
@@ -23,10 +23,18 @@ sqlite.open('./database.sqlite').then(function(db) {
 
     app.get('/orders', function (req, res) {
         db.all("SELECT * FROM Orders").then(function(rows) {
+			rows = rows.map(function(row) {
+				row.DeliveryStatus = row.DeliveryStatus ? row.DeliveryStatus : 'Pending';
+				return row;
+			});
             var file = fs.readFileSync('templates/orders.mst', "utf8");
-            var html = Mustache.to_html(file, {orders: rows});
+            var template = Handlebars.compile(file);
+			var html = template({orders: rows});
             return res.send(html);
-        });
+        }).catch(function(e) {
+			console.log(e)
+			return res.send("Error");
+		  });
     });
 
     app.get('/orders/:orderid', function (req, res) {
@@ -34,10 +42,19 @@ sqlite.open('./database.sqlite').then(function(db) {
             "SELECT * FROM Orders WHERE id=$id",
             {$id: req.params.orderid}
         ).then(function(row) {
+			var deliveryStatuses = [
+				{label: "Pending", selected: row.DeliveryStatus === 'Pending'},
+				{label: "Collected", selected: row.DeliveryStatus === 'Collected'},
+				{label: "Delivered", selected: row.DeliveryStatus === 'Delivered'}
+			];
             var file = fs.readFileSync('templates/order.mst', "utf8");
-            var html = Mustache.to_html(file, row);
+            var template = Handlebars.compile(file);
+			var html = template({order: row, delivery_statuses: deliveryStatuses});
             return res.send(html);
-        });
+        }).catch(function(e) {
+			console.log(e)
+			return res.send("Error");
+		  });
     });
 
     app.get('/orders/search/:term', function (req, res) {
@@ -46,7 +63,12 @@ sqlite.open('./database.sqlite').then(function(db) {
             {$term: req.params.term}
         ).then(function(rows) {
             var file = fs.readFileSync('templates/orders.mst', "utf8");
-            var html = Mustache.to_html(file, {orders: rows});
+			rows=rows.map(function(row) {
+				row.DeliveryStatus = row.DeliveryStatus ? row.DeliveryStatus : 'Pending';
+				return row;
+			});
+            var template = Handlebars.compile(file);
+			var html = template({orders: rows});
 		$Title: req.body.Title
         });
     });
@@ -75,6 +97,24 @@ sqlite.open('./database.sqlite').then(function(db) {
 		$DeliveryPostcode: req.body.DeliveryPostcode
 		}).then(function() {
 			return res.redirect("/Splash.html");
+			//Return sensible response	
+		}).catch(function(e) {
+			console.log(e)
+			return res.send("Error");
+		  });
+	});
+	
+	app.post('/order', function(req, res) {
+		//Extract data from request.
+		console.log(req.body);
+		//Validate Data
+		//Write data to DB
+		return db.run("UPDATE Orders SET DeliveryStatus = $DeliveryStatus, CollectionDate = $CollectionDate WHERE id = $id", { 
+		$id: req.body.id,
+		$DeliveryStatus: req.body.DeliveryStatus,
+		$CollectionDate: req.body.CollectionDate
+		}).then(function() {
+			return res.redirect("/orders");
 			//Return sensible response	
 		}).catch(function(e) {
 			console.log(e)

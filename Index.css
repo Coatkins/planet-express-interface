@@ -109,3 +109,50 @@ form {
     background-color: #4CAF50;
     color: white;
 }
+
+#Order {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+	text-align: left;
+    border: 2px solid #000000;
+	margin: auto;
+	width: 1600px;
+}
+
+.capital {
+	text-transform: capitalize;
+}
+
+.orderform {
+	float: left;
+}
+
+.orderbutton {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px 4px 450px;
+    cursor: pointer;
+}
+
+#Order td, #Order th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#Order tr:nth-child(even){background-color: #f2f2f2;}
+
+#Order tr:hover {background-color: #ddd;}
+
+#Order th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}

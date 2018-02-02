@@ -20,5 +20,4 @@ CREATE TABLE Orders (
 );
 
 -- Down
-DROP TABLE Category
-DROP TABLE Post;
+DROP TABLE Orders;
