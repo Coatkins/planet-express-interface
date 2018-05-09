@@ -1,0 +1,3 @@
+- Add a Username and Password to the system.
+- Add a new order tracking and history system unique to the customer so they only see their previous orders.
+- Add button navigation through the application so that users will not have to use the browser back buttons to navigate as this is poor UI design!

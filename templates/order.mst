@@ -9,6 +9,8 @@
 	<header>
 		<img src="/logo.svg" class="app-logo" alt="logo" />
 		<h1 style="h1">Order</h1>
+        <a href="/orders" class="returntoorders">Orders</a>
+		<span><a href="/Index.html" class="returntoorders">Home</a></span>
 	</header>
 	<div class="main">
 		<form class="orderform" action="/order" method="POST">  
@@ -21,7 +23,6 @@
 				<th>Personal Address 2</th>
 				<th>Personal Postcode</th>
 				<th>Phone Number</th>
-				<th>Email</th>
 				<th>Weight(Kg)</th>
 			</tr>
 			<tr>
@@ -32,7 +33,6 @@
 				<td>{{ order.PersonalAdd2 }}</td>
 				<td>{{ order.PersonalPostcode }}</td>
 				<td>{{ order.Phonenumber }}</td>
-				<td>{{ order.Email }}</td>
 				<td>{{ order.Weight }}</td>
 			</tr>
 		</table>
@@ -68,10 +68,20 @@
 			</tr>
 		</table>
 		<br>
+		<table id="Order" style="width:160%">
+			<tr>
+				<th>Username</th>
+				<th>Email</th>
+			</tr>
+			<tr>
+				<td>{{ order.Username }}</td>
+				<td>{{ order.UserEmail }}</td>
+			</tr>
+		</table>
+		<br>
 		<br>
         <button class="orderbutton" type="submit">Update</button>
 		<input type="hidden" name="id" value="{{ order.id }}">
-		</form>
 	</div>
     </body>
 </div>

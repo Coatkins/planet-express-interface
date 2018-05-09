@@ -9,10 +9,31 @@
 	<header>
 		<img src="logo.svg" class="app-logo" alt="logo" />
 		<h1 style="h1">Welcome to Planet Express</h1>
+        <a href="/orders" class="returntoorders">Orders</a>
+		<span><a href="/Index.html" class="returntoorders">Home</a></span>
 	</header>
 	<div class="main"><br>
-		<h2 class="heading">My Personal Details</h2><br>
+	    <h2 class="heading">Account Details</h2>
 		<form action="/orders" method="POST">
+<div class="entry-form">
+		<p>
+			<label>Username</label><br><br>
+			<input type="text" name="Username" placeholder="Please enter Username..."><br>
+		</p>
+</div>	
+<div class="entry-form">
+		<p>
+			<label>Email</label><br><br>
+			<input type="email" name="Email" placeholder="Please enter Email..."><br>
+		</p>
+</div>
+<div class="entry-form">
+		<p>
+			<label>Password</label><br><br>
+			<input type="password" name="Password" placeholder="Please enter a Password...">
+		</p>
+</div>	
+		<h2 class="heading">My Personal Details</h2>
 <div class="entry-form">
 		<p>
 			<label>Title</label><br><br>
@@ -61,25 +82,7 @@
 			<input type="text" name="Phonenumber" placeholder="Please enter Phone Number..."><br>
 		</p>
 </div>
-<div class="entry-form">
-		<p>
-			<label>Email</label><br><br>
-			<input type="email" name="Email" placeholder="Please enter Email..."><br>
-		</p>
-</div>
-<div class="entry-form">
-		<p>
-			<label>Username</label><br><br>
-			<input type="text" name="Username" placeholder="Please enter a Username..."><br>
-		</p>
-</div>
-<div class="entry-form">
-		<p>
-			<label>Password</label><br><br>
-			<input type="password" name="Password" placeholder="Please enter a Password..."><br>
-		</p>
-</div>
-        <h2 class="heading">Package Details</h2><br>
+        <h2 class="heading">Package Details</h2>
 <div class="entry-form">
         <p>
           <label>Weight (kg)</label><br><br>
@@ -92,7 +95,7 @@
           <textarea name="Comments" placeholder="Please enter any additional details..."></textarea><br>
 </p>
 </div>
-        <h2 class="heading">Collection Address</h2><br>
+        <h2 class="heading">Collection Address</h2>
 <div class="entry-form">
         <p>
           <label>Address Line 1</label><br><br>
@@ -112,7 +115,7 @@
 		</p>
 </div>
 
-        <h2 class="heading">Delivery Address</h2><br>
+        <h2 class="heading">Delivery Address</h2>
 <div class="entry-form">
         <p>
           <label>Address Line 1</label><br><br>

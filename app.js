@@ -5,6 +5,33 @@ var sqlite = require('sqlite');
 var Handlebars = require('handlebars');
 var app = express();
 var bodyParser = require('body-parser');
+var addOrder = function(req, db, userID){
+	return db.run("INSERT INTO Orders(Title, Forename, Surname, PersonalAdd1, PersonalAdd2, PersonalPostcode, Phonenumber, Weight, Comments, CollectionAdd1, CollectionAdd2, CollectionPostcode, DeliveryAdd1, DeliveryAdd2, DeliveryPostcode, UserID) VALUES ($Title, $Forename, $Surname, $PersonalAdd1, $PersonalAdd2, $PersonalPostcode, $Phonenumber, $Weight, $Comments, $CollectionAdd1, $CollectionAdd2, $CollectionPostcode, $DeliveryAdd1, $DeliveryAdd2, $DeliveryPostcode, $userID)", {
+		$Title: req.body.Title,
+		$Forename: req.body.Forename,
+		$Surname: req.body.Surname,
+		$PersonalAdd1: req.body.PersonalAdd1,
+		$PersonalAdd2: req.body.PersonalAdd2,
+		$PersonalPostcode: req.body.PersonalPostcode,
+		$Phonenumber: req.body.Phonenumber,
+		$Weight: req.body.Weight,
+		$Comments: req.body.Comments,
+		$CollectionAdd1: req.body.CollectionAdd1,
+		$CollectionAdd2: req.body.CollectionAdd2,
+		$CollectionPostcode: req.body.CollectionPostcode,
+		$DeliveryAdd1: req.body.DeliveryAdd1,
+		$DeliveryAdd2: req.body.DeliveryAdd2,
+		$DeliveryPostcode: req.body.DeliveryPostcode,
+		$userID: userID
+	})	
+};
+var addUser = function(req, db){
+	return db.run("INSERT INTO Users(Username, Email, Password) VALUES ($Username, $Email, $Password)", {
+		$Username: req.body.Username,
+		$Email: req.body.Email,
+		$Password: req.body.Password
+	})
+};
 
 sqlite.open('./database.sqlite').then(function(db) {
 
@@ -39,7 +66,7 @@ sqlite.open('./database.sqlite').then(function(db) {
 
     app.get('/orders/:orderid', function (req, res) {
         db.get(
-            "SELECT * FROM Orders WHERE id=$id",
+            "SELECT Orders.*, Users.Username, Users.Email AS UserEmail FROM Orders LEFT JOIN Users ON Orders.UserID=Users.id WHERE Orders.id=$id",
             {$id: req.params.orderid}
         ).then(function(row) {
 			var deliveryStatuses = [
@@ -73,28 +100,15 @@ sqlite.open('./database.sqlite').then(function(db) {
         });
     });
 	
+	
+	
 	app.post('/orders', function(req, res) {
 		//Extract data from request.
 		console.log(req.body);
 		//Validate Data
 		//Write data to DB
-		return db.run("INSERT INTO Orders(Title, Forename, Surname, PersonalAdd1, PersonalAdd2, PersonalPostcode, Phonenumber, Email, Weight, Comments, CollectionAdd1, CollectionAdd2, CollectionPostcode, DeliveryAdd1, DeliveryAdd2, DeliveryPostcode) VALUES ($Title, $Forename, $Surname, $PersonalAdd1, $PersonalAdd2, $PersonalPostcode, $Phonenumber, $Email, $Weight, $Comments, $CollectionAdd1, $CollectionAdd2, $CollectionPostcode, $DeliveryAdd1, $DeliveryAdd2, $DeliveryPostcode)", {
-		$Title: req.body.Title,
-		$Forename: req.body.Forename,
-		$Surname: req.body.Surname,
-		$PersonalAdd1: req.body.PersonalAdd1,
-		$PersonalAdd2: req.body.PersonalAdd2,
-		$PersonalPostcode: req.body.PersonalPostcode,
-		$Phonenumber: req.body.Phonenumber,
-		$Email: req.body.Email,
-		$Weight: req.body.Weight,
-		$Comments: req.body.Comments,
-		$CollectionAdd1: req.body.CollectionAdd1,
-		$CollectionAdd2: req.body.CollectionAdd2,
-		$CollectionPostcode: req.body.CollectionPostcode,
-		$DeliveryAdd1: req.body.DeliveryAdd1,
-		$DeliveryAdd2: req.body.DeliveryAdd2,
-		$DeliveryPostcode: req.body.DeliveryPostcode
+		return addUser(req, db).then(function(dbres){
+			return addOrder(req, db, dbres.lastID);
 		}).then(function() {
 			return res.redirect("/Splash.html");
 			//Return sensible response	

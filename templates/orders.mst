@@ -9,6 +9,8 @@
 	<header>
 		<img src="logo.svg" class="app-logo" alt="logo" />
 		<h1 style="h1">Orders</h1>
+        <a href="/orders" class="returntoorders">Orders</a>
+		<span><a href="/Index.html" class="returntoorders">Home</a></span>
 	</header>
 	<div class="main">
 		<table id="Orders">
