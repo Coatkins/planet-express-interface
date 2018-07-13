@@ -6,6 +6,7 @@ var Handlebars = require('handlebars');
 var app = express();
 var bodyParser = require('body-parser');
 var passwordHash = require('password-hash');
+var session = require('express-session');
 var addOrder = function(req, db, userID){
 	return db.run("INSERT INTO Orders(Title, Forename, Surname, PersonalAdd1, PersonalAdd2, PersonalPostcode, Phonenumber, Weight, Comments, CollectionAdd1, CollectionAdd2, CollectionPostcode, DeliveryAdd1, DeliveryAdd2, DeliveryPostcode, UserID) VALUES ($Title, $Forename, $Surname, $PersonalAdd1, $PersonalAdd2, $PersonalPostcode, $Phonenumber, $Weight, $Comments, $CollectionAdd1, $CollectionAdd2, $CollectionPostcode, $DeliveryAdd1, $DeliveryAdd2, $DeliveryPostcode, $userID)", {
 		$Title: req.body.Title,
@@ -26,6 +27,17 @@ var addOrder = function(req, db, userID){
 		$userID: userID
 	})	
 };
+app.use(session({
+  secret: 'unique key'
+}));
+
+app.use(function(req, res, next){
+	if(typeof(req.session.userid) === undefined) {
+		req.session.userid = null;
+	};
+	next();
+});
+
 var addUser = function(req, db){
 	return db.run("INSERT INTO Users(Username, Email, Password) VALUES ($Username, $Email, $Password)", {
 		$Username: req.body.Username,
@@ -85,6 +97,31 @@ sqlite.open('./database.sqlite').then(function(db) {
 		  });
     });
 
+	
+    app.get('/dashboard/', function (req, res) {
+		// @todo - get userid from token!
+		var userid = req.session.userid;
+		if(!userid){
+			return res.redirect('Login.html');
+		}
+        db.all(
+            "SELECT Orders.*, Users.Username, Users.Email AS UserEmail FROM Orders LEFT JOIN Users ON Orders.UserID=Users.id WHERE Users.id=$id",
+            {$id: userid}
+        ).then(function(rows) {
+			rows = rows.map(function(row) {
+				row.DeliveryStatus = row.DeliveryStatus ? row.DeliveryStatus : 'Pending';
+				return row;
+			});
+            var file = fs.readFileSync('templates/orders.mst', "utf8");
+            var template = Handlebars.compile(file);
+			var html = template({orders: rows});
+            return res.send(html);
+        }).catch(function(e) {
+			console.log(e)
+			return res.send("Error");
+		});
+    });
+
     app.get('/orders/search/:term', function (req, res) {
         db.all(
             "SELECT * FROM Orders WHERE name LIKE '%'||$term||'%'",
@@ -102,7 +139,6 @@ sqlite.open('./database.sqlite').then(function(db) {
     });
 	
 	
-	
 	app.post('/orders', function(req, res) {
 		//Extract data from request.
 		console.log(req.body);
@@ -118,31 +154,16 @@ sqlite.open('./database.sqlite').then(function(db) {
 			return res.send("Error");
 		  });
 	});
-	
-	app.get('/debug', function(req, res){
-		var password = "hunter2";
-		var hashed = passwordHash.generate(password);
-		
-		res.send(hashed);
-	});
-	
+
 	app.post('/login', function(req, res) {
 		db.get("SELECT * FROM Users WHERE Username = $Username LIMIT 1", {
 			$Username: req.body.username
 		}).then(function(user) {
 			if(passwordHash.verify(req.body.password, user.Password)) {
-				db.all(
-					"SELECT Orders.*, Users.Username, Users.Email AS UserEmail FROM Orders LEFT JOIN Users ON Orders.UserID=Users.id WHERE Users.id=$id", 
-					{$id: user.id})
-				.then(function(rows){
-					console.log(rows);
-					var file = fs.readFileSync('templates/orders.mst', "utf8");
-					var template = Handlebars.compile(file);
-					var html = template({login: user, orders: rows});
-					return res.send(html);			
-				})
+				req.session.userid = user.id
+				return res.redirect('/dashboard');
 			} else {
-					res.send("FOFF");
+				return res.redirect('/Login.html');
 			}
 		}).catch(function(err){
 			console.log(err);
