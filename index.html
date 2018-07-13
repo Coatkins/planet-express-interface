@@ -9,35 +9,37 @@
 	<header>
 		<img src="logo.svg" class="app-logo" alt="logo" />
 		<h1 style="h1">Welcome to Planet Express</h1>
-        <a href="/orders" class="returntoorders">Orders</a>
+        <a href="/orders" class="returntoorders" style="margin-left:120px">Orders</a>
 		<span><a href="/Index.html" class="returntoorders">Home</a></span>
+		<span><a href="/Login.html" class="returntoorders">Login</a></span>
+		<span class="logout"><a href="/????" class="returntoorders">Logout</a></span>
 	</header>
 	<div class="main"><br>
 	    <h2 class="heading">Account Details</h2>
 		<form action="/orders" method="POST">
 <div class="entry-form">
 		<p>
-			<label>Username</label><br><br>
+			<label class="label">Username</label><br><br>
 			<input type="text" name="Username" placeholder="Please enter Username..."><br>
 		</p>
 </div>	
 <div class="entry-form">
 		<p>
-			<label>Email</label><br><br>
+			<label class="label">Email</label><br><br>
 			<input type="email" name="Email" placeholder="Please enter Email..."><br>
 		</p>
 </div>
 <div class="entry-form">
 		<p>
-			<label>Password</label><br><br>
+			<label class="label">Password</label><br><br>
 			<input type="password" name="Password" placeholder="Please enter a Password...">
 		</p>
 </div>	
 		<h2 class="heading">My Personal Details</h2>
 <div class="entry-form">
 		<p>
-			<label>Title</label><br><br>
-			<select name="Title">
+			<label class="label">Title</label><br><br>
+			<select name="Title" class="title">
 				<option value="null"></option>
 				<option value="mr">Mr</option>
 				<option value="mrs">Mrs</option>
@@ -48,69 +50,69 @@
 </div>
 <div class="entry-form">
 		<p>
-			<label>Forename</label><br><br>
+			<label class="label">Forename</label><br><br>
 			<input type="text" name="Forename" placeholder="Please enter Forename..."><br>
 		</p>
 </div>
 <div class="entry-form">
 		<p>
-			<label>Surname</label><br><br>
+			<label class="label">Surname</label><br><br>
 			<input type="text" name="Surname" placeholder="Please enter Surname..."><br>
 		</p>
 </div>
 <div class="entry-form">
 		<p>
-			<label>Address Line 1</label><br><br>
+			<label class="label">Address Line 1</label><br><br>
 			<input type="text" name="PersonalAdd1" placeholder="Please enter Address Line 1..."><br>
 		</p>
 </div>
 <div class="entry-form">
 		<p>
-			<label>Address Line 2</label><br><br>
+			<label class="label">Address Line 2</label><br><br>
 			<input type="text" name="PersonalAdd2" placeholder="Please enter Address Line 2..."><br>
 		</p>
 </div>
 <div class="entry-form">
 		<p>
-			<label>Postcode</label><br><br>
+			<label class="label">Postcode</label><br><br>
 			<input type="text" name="PersonalPostcode" placeholder="Please enter Postcode..."><br>
 		</p>
 </div>
 <div class="entry-form">
 		<p>
-			<label>Phone Number</label><br><br>
+			<label class="label">Phone Number</label><br><br>
 			<input type="text" name="Phonenumber" placeholder="Please enter Phone Number..."><br>
 		</p>
 </div>
         <h2 class="heading">Package Details</h2>
 <div class="entry-form">
         <p>
-          <label>Weight (kg)</label><br><br>
+          <label class="label">Weight (kg)</label><br><br>
           <input type="number" name="Weight" placeholder="Please enter Weight..."/><br>
         </p>
 </div>
 <div class="entry-form">
         <p>
-          <label>Comments</label><br><br>
+          <label class="label">Comments</label><br><br>
           <textarea name="Comments" placeholder="Please enter any additional details..."></textarea><br>
 </p>
 </div>
         <h2 class="heading">Collection Address</h2>
 <div class="entry-form">
         <p>
-          <label>Address Line 1</label><br><br>
+          <label class="label">Address Line 1</label><br><br>
           <input type="text" name="CollectionAdd1" placeholder="Please enter Address Line 1..."/><br>
         </p>
 </div>
 <div class="entry-form">
         <p>
-          <label>Address Line 2</label><br><br>
+          <label class="label">Address Line 2</label><br><br>
           <input type="text" name="CollectionAdd2" placeholder="Please enter Address Line 2..."/><br>
         </p>
 </div>
 <div class="entry-form">
         <p>
-          <label>Postcode</label><br><br>
+          <label class="label">Postcode</label><br><br>
           <input type="text" name="CollectionPostcode" placeholder="Please enter Postcode..."/><br>
 		</p>
 </div>
@@ -118,19 +120,19 @@
         <h2 class="heading">Delivery Address</h2>
 <div class="entry-form">
         <p>
-          <label>Address Line 1</label><br><br>
+          <label class="label">Address Line 1</label><br><br>
           <input type="text" name="DeliveryAdd1" placeholder="Please enter Address Line 1..."/><br>
         </p>
 </div>
 <div class="entry-form">
         <p>
-          <label>Address Line 2</label><br><br>
+          <label class="label">Address Line 2</label><br><br>
           <input type="text" name="DeliveryAdd2" placeholder="Please enter Address Line 2..."/><br>
         </p>
 </div>
 <div class="entry-form">
         <p>
-          <label>Postcode</label><br><br>
+          <label class="label">Postcode</label><br><br>
           <input type="text" name="DeliveryPostcode" placeholder="Please enter Postcode..."/><br>
 		</p>
 </div>

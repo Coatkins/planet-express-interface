@@ -7,8 +7,13 @@
 	padding-top: 15px;
 }
 
+.body {
+	width: 100%;
+}
+
 .entry-form {
 	padding: 0.5em;
+	display: inline;
 }
 
 .heading {
@@ -45,24 +50,54 @@
     cursor: pointer;
 }
 
+.label {
+	text-align: left;
+	display: block;
+	padding-left: 130px;
+}
+
 input[type=number]{
     width: 500px;
 }
 
 input[type=text]{
     width: 500px;
+	padding: 12px 20px;
+    margin: 8px 0;
 } 
 
 input[type=email]{
     width: 500px;
+	padding: 12px 20px;
+    margin: 8px 0;
 }
 
 input[type=password]{
     width: 500px;
+	padding: 12px 20px;
+    margin: 8px 0;
+}
+
+input[type=number] {
+    width: 500px;
+	padding: 12px 20px;
+    margin: 8px 0;	
 }    
 
 textarea {
 	width: 500px;
+	padding: 12px 20px;
+    margin: 8px 0;
+}
+
+.title {
+    width: 550px;
+	padding: 12px 20px;
+    margin: 8px 0;
+}
+
+.logout {
+	float: right;
 }
 
 .app-logo {

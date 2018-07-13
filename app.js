@@ -5,6 +5,7 @@ var sqlite = require('sqlite');
 var Handlebars = require('handlebars');
 var app = express();
 var bodyParser = require('body-parser');
+var passwordHash = require('password-hash');
 var addOrder = function(req, db, userID){
 	return db.run("INSERT INTO Orders(Title, Forename, Surname, PersonalAdd1, PersonalAdd2, PersonalPostcode, Phonenumber, Weight, Comments, CollectionAdd1, CollectionAdd2, CollectionPostcode, DeliveryAdd1, DeliveryAdd2, DeliveryPostcode, UserID) VALUES ($Title, $Forename, $Surname, $PersonalAdd1, $PersonalAdd2, $PersonalPostcode, $Phonenumber, $Weight, $Comments, $CollectionAdd1, $CollectionAdd2, $CollectionPostcode, $DeliveryAdd1, $DeliveryAdd2, $DeliveryPostcode, $userID)", {
 		$Title: req.body.Title,
@@ -29,7 +30,7 @@ var addUser = function(req, db){
 	return db.run("INSERT INTO Users(Username, Email, Password) VALUES ($Username, $Email, $Password)", {
 		$Username: req.body.Username,
 		$Email: req.body.Email,
-		$Password: req.body.Password
+		$Password: passwordHash.generate(req.body.Password)
 	})
 };
 
@@ -118,16 +119,50 @@ sqlite.open('./database.sqlite').then(function(db) {
 		  });
 	});
 	
+	app.get('/debug', function(req, res){
+		var password = "hunter2";
+		var hashed = passwordHash.generate(password);
+		
+		res.send(hashed);
+	});
+	
+	app.post('/login', function(req, res) {
+		db.get("SELECT * FROM Users WHERE Username = $Username LIMIT 1", {
+			$Username: req.body.username
+		}).then(function(user) {
+			if(passwordHash.verify(req.body.password, user.Password)) {
+				db.all(
+					"SELECT Orders.*, Users.Username, Users.Email AS UserEmail FROM Orders LEFT JOIN Users ON Orders.UserID=Users.id WHERE Users.id=$id", 
+					{$id: user.id})
+				.then(function(rows){
+					console.log(rows);
+					var file = fs.readFileSync('templates/orders.mst', "utf8");
+					var template = Handlebars.compile(file);
+					var html = template({login: user, orders: rows});
+					return res.send(html);			
+				})
+			} else {
+					res.send("FOFF");
+			}
+		}).catch(function(err){
+			console.log(err);
+			res.send('Error');
+		});
+	});
+	
 	app.post('/order', function(req, res) {
 		//Extract data from request.
 		console.log(req.body);
 		//Validate Data
 		//Write data to DB
-		return db.run("UPDATE Orders SET DeliveryStatus = $DeliveryStatus, CollectionDate = $CollectionDate WHERE id = $id", { 
-		$id: req.body.id,
-		$DeliveryStatus: req.body.DeliveryStatus,
-		$CollectionDate: req.body.CollectionDate
-		}).then(function() {
+		return db.run(
+			"UPDATE Orders SET DeliveryStatus = $DeliveryStatus, CollectionDate = $CollectionDate WHERE id = $id", 
+			{ 
+				$id: req.body.id,
+				$DeliveryStatus: req.body.DeliveryStatus,
+				$CollectionDate: req.body.CollectionDate
+			}
+		).then(function() {
 			return res.redirect("/orders");
 			//Return sensible response	
 		}).catch(function(e) {

@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="/Index.css">
     </head>
 <div class="app">
-    <body style="width:100%">
+    <body class="body">
 	<header>
 		<img src="/logo.svg" class="app-logo" alt="logo" />
 		<h1 style="h1">Order</h1>
@@ -68,14 +68,14 @@
 			</tr>
 		</table>
 		<br>
-		<table id="Order" style="width:160%">
+		<table id="Order" style="width:100%">
 			<tr>
-				<th>Username</th>
-				<th>Email</th>
+				<th style="width:45%">Username</th>
+				<th style="width:50%">Email</th>
 			</tr>
 			<tr>
-				<td>{{ order.Username }}</td>
-				<td>{{ order.UserEmail }}</td>
+				<td style="width:45%">{{ order.Username }}</td>
+				<td style="width:50%">{{ order.UserEmail }}</td>
 			</tr>
 		</table>
 		<br>

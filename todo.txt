@@ -1,3 +1,2 @@
-- Add a Username and Password to the system.
-- Add a new order tracking and history system unique to the customer so they only see their previous orders.
-- Add button navigation through the application so that users will not have to use the browser back buttons to navigate as this is poor UI design!
+- Add a login system, users can login and logout of the application.
+- Order tracking will now be tied down to individual user orders.
